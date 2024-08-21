@@ -23,13 +23,29 @@
 </head>
 <body>
 
-    <iframe id="videoFrame" src="https://www.youtube.com/embed/xQYZj80tgL8?autoplay=1&mute=1"></iframe>
+    <iframe id="videoFrame" src="https://www.youtube.com/embed/xQYZj80tgL8?autoplay=1&mute=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
     <script>
-        var firstVideoDuration = 50000; // 50 seconds (adjust this based on the actual duration of the first video)
+        // Set the duration of the first video in milliseconds
+        var firstVideoDuration = 50000; // 54 seconds (adjust based on the actual video duration)
 
+        // Function to unmute and set the volume to maximum
+        function unmuteAndMaxVolume() {
+            var iframe = document.getElementById("videoFrame");
+            var videoPlayer = iframe.contentWindow;
+            videoPlayer.postMessage('{"event":"command","func":"setVolume","args":[100]}', '*');
+            videoPlayer.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+        }
+
+        // Attempt to unmute and maximize volume immediately on load
+        window.onload = function() {
+            unmuteAndMaxVolume();
+        };
+
+        // Change the video after the first one ends and ensure it is unmuted and at max volume
         setTimeout(function() {
-            document.getElementById("videoFrame").src = "https://www.youtube.com/embed/DEegoOwZE4E?autoplay=1&mute=1";
+            document.getElementById("videoFrame").src = "https://www.youtube.com/embed/DEegoOwZE4E?autoplay=1&mute=0";
+            setTimeout(unmuteAndMaxVolume, 2000); // Ensure volume is maxed and unmuted on the second video
         }, firstVideoDuration);
 
     </script>
