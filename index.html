@@ -23,11 +23,11 @@
 </head>
 <body>
 
-    <iframe id="videoFrame" src="https://www.youtube.com/embed/xQYZj80tgL8?autoplay=1&mute=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe id="videoFrame" src="https://www.youtube.com/embed/xQYZj80tgL8?autoplay=1&mute=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
     <script>
         // Set the duration of the first video in milliseconds
-        var firstVideoDuration = 50000; // 60 seconds (adjust based on the actual video duration)
+        var firstVideoDuration = 50000; // Adjust this based on the actual duration of the first video
 
         // Function to unmute and set the volume to maximum
         function unmuteAndMaxVolume() {
@@ -37,24 +37,35 @@
             videoPlayer.postMessage('{"event":"command","func":"unMute","args":""}', '*');
         }
 
-        // Attempt to unmute and maximize volume immediately after the page loads
-        window.onload = function() {
-            unmuteAndMaxVolume();
-
-            // Attempt to start the video programmatically if autoplay fails
+        // Function to attempt playing the video
+        function playVideo() {
             var iframe = document.getElementById("videoFrame");
             var videoPlayer = iframe.contentWindow;
             videoPlayer.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        }
+
+        // Attempt to unmute, maximize volume, and play the video on load
+        window.onload = function() {
+            unmuteAndMaxVolume();
+            playVideo();
         };
 
-        // Change the video after the first one ends and ensure it is unmuted and at max volume
+        // Retry playing the video if it doesn't start immediately
+        setTimeout(function() {
+            playVideo();
+        }, 1000); // Retry after 1 second
+
+        // Change the video to the second one after the first video ends
         setTimeout(function() {
             document.getElementById("videoFrame").src = "https://www.youtube.com/embed/DEegoOwZE4E?autoplay=1&mute=0&playsinline=1";
-            setTimeout(unmuteAndMaxVolume, 2000); // Ensure volume is maxed and unmuted on the second video
+            setTimeout(function() {
+                unmuteAndMaxVolume();
+                playVideo();
+            }, 2000); // Ensure the second video starts playing at maximum volume
         }, firstVideoDuration);
-
     </script>
 
 </body>
 </html>
+
 
