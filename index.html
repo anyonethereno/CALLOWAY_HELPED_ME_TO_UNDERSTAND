@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALLOWAY_HELPED_ME_TO_UNDERSTAND</title>
+</head>
+<body>
+    <iframe id="video1" width="100%" height="100%" src="https://www.youtube.com/embed/xQYZj80tgL8?autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    
+    <script>
+        var video1 = document.getElementById("video1");
+
+        video1.addEventListener('load', function() {
+            this.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        });
+
+        video1.addEventListener('ended', function() {
+            window.location.href = "https://www.youtube.com/embed/DEegoOwZE4E?autoplay=1&mute=1";
+        });
+    </script>
+</body>
+</html>
