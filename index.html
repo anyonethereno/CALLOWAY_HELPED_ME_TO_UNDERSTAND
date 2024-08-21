@@ -4,23 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CALLOWAY_HELPED_ME_TO_UNDERSTAND</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
 </head>
 <body>
-    <iframe id="video1" width="100%" height="100%" src="https://www.youtube.com/embed/xQYZj80tgL8?autoplay=1&mute=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+    <iframe id="videoFrame" src="https://www.youtube.com/embed/xQYZj80tgL8?autoplay=1&mute=1"></iframe>
 
     <script>
-        // Redirect to the second video after the first one finishes
-        var iframe = document.getElementById("video1");
-        var player = new YT.Player(iframe, {
-            events: {
-                'onStateChange': function(event) {
-                    if (event.data === YT.PlayerState.ENDED) {
-                        window.location.href = "https://www.youtube.com/embed/DEegoOwZE4E?autoplay=1&mute=0";
-                    }
-                }
-            }
-        });
+        var firstVideoDuration = 50000; // 50 seconds (adjust this based on the actual duration of the first video)
+
+        setTimeout(function() {
+            document.getElementById("videoFrame").src = "https://www.youtube.com/embed/DEegoOwZE4E?autoplay=1&mute=1";
+        }, firstVideoDuration);
+
     </script>
-    <script src="https://www.youtube.com/iframe_api"></script>
+
 </body>
 </html>
